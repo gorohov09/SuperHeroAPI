@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SuperHeroAPI.Domain.Entities;
 
-namespace SuperHeroAPI.Data
+namespace SuperHeroAPI.DAL.Context
 {
     public class DataContext : DbContext
     {

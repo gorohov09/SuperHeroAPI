@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SuperHeroAPI.Data;
-using SuperHeroAPI.Interfaces;
+using Microsoft.Extensions.Logging;
+using SuperHeroAPI.DAL.Context;
+using SuperHeroAPI.Domain.Entities;
+using SuperHeroAPI.Services.Interfaces;
 
-namespace SuperHeroAPI.Services
+namespace SuperHeroAPI.Services.Repositories
 {
     public class SuperHeroRepository : ISuperHeroRepository
     {

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using SuperHeroAPI.Data;
-using SuperHeroAPI.Interfaces;
-using SuperHeroAPI.Services;
+using SuperHeroAPI.DAL.Context;
+using SuperHeroAPI.Services.Interfaces;
+using SuperHeroAPI.Services.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

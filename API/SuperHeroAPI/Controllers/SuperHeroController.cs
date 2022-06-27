@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SuperHeroAPI.Data;
-using SuperHeroAPI.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
+using SuperHeroAPI.Domain.Entities;
+using SuperHeroAPI.Services.Interfaces;
 
 namespace SuperHeroAPI.Controllers
 {

@@ -1,4 +1,6 @@
-﻿namespace SuperHeroAPI.Interfaces
+﻿using SuperHeroAPI.Domain.Entities;
+
+namespace SuperHeroAPI.Services.Interfaces
 {
     public interface ISuperHeroRepository
     {
