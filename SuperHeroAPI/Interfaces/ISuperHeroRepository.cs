@@ -2,14 +2,14 @@
 {
     public interface ISuperHeroRepository
     {
-        IEnumerable<SuperHero> GetAll();
+        Task<IEnumerable<SuperHero>> GetAll();
 
-        SuperHero Get(int id);
+        Task<SuperHero?> GetById(int id);
 
-        void Add(SuperHero hero);
+        Task Add(SuperHero hero);
 
-        bool Update(SuperHero hero);
+        Task<bool> Update(SuperHero hero);
 
-        bool Delete(int id);
+        Task<bool> Delete(int id);
     }
 }
