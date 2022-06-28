@@ -73,8 +73,8 @@ namespace SuperHeroAPI.Services.Repositories
             }
 
             db_hero.Name = hero.Name;
-            db_hero.LastName = hero.LastName;
-            db_hero.FirstName = hero.FirstName;
+            //db_hero.LastName = hero.LastName;
+            //db_hero.FirstName = hero.FirstName;
             db_hero.Place = hero.Place;
             await _Context.SaveChangesAsync();
 
