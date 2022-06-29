@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using SuperHeroAPI.Domain.DTO;
 using SuperHeroAPI.Domain.Entities;
 using SuperHeroAPI.Services.Interfaces;
 
@@ -9,24 +11,32 @@ namespace SuperHeroAPI.Controllers
     public class SuperHeroController : ControllerBase
     {
         private readonly ISuperHeroRepository _SuperHeroService;
+        private readonly IMapper _Mapper;
 
-        public SuperHeroController(ISuperHeroRepository SuperHeroService)
+        public SuperHeroController(ISuperHeroRepository SuperHeroService, IMapper Mapper)
         {
             _SuperHeroService = SuperHeroService;
+            _Mapper = Mapper;
         }
 
         [HttpGet("all")]
-        public async Task<ActionResult<List<SuperHero>>> Get() => Ok(await _SuperHeroService.GetAll());
+        public async Task<IActionResult> Get()
+        {
+            var heroes = await _SuperHeroService.GetAll();
+            var heroes_dto = _Mapper.Map<List<SuperHeroDTO>>(heroes);
+            return Ok(heroes_dto);
+        }
 
         [HttpGet("{Id}")]
-        public async Task<ActionResult<SuperHero>> GetById(int Id)
+        public async Task<IActionResult> GetById(int Id)
         {
             var hero = await _SuperHeroService.GetById(Id);
-            return hero is null ? NotFound() : Ok(hero);
+            var hero_dto = _Mapper.Map<SuperHeroDTO>(hero);
+            return hero_dto is null ? NotFound() : Ok(hero_dto);
         }
 
         [HttpPost("add")]
-        public async Task<ActionResult<List<SuperHero>>> AddHero(SuperHero hero)
+        public async Task<IActionResult> AddHero(SuperHero hero)
         {
             await _SuperHeroService.Add(hero);
             return Ok(await _SuperHeroService.GetAll());
