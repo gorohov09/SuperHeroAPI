@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using SuperHeroAPI.DAL.Context;
 using SuperHeroAPI.Services.Interfaces;
 using SuperHeroAPI.Services.Repositories;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services.AddSwaggerGen();
 
 //Регистрация собственный сервисов
 builder.Services.AddScoped<ISuperHeroRepository, SuperHeroRepository>();
+builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 
 var app = builder.Build();
 
