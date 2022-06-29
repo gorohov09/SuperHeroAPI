@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SuperHeroAPI.DAL.Context;
 
@@ -11,9 +12,10 @@ using SuperHeroAPI.DAL.Context;
 namespace SuperHeroAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220629180316_team_is_null")]
+    partial class team_is_null
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,6 +81,7 @@ namespace SuperHeroAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("SuperHeroTeamId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Type")
@@ -134,7 +137,9 @@ namespace SuperHeroAPI.Migrations
                 {
                     b.HasOne("SuperHeroAPI.Domain.Entities.SuperHeroTeam", "Team")
                         .WithMany("Heroes")
-                        .HasForeignKey("SuperHeroTeamId");
+                        .HasForeignKey("SuperHeroTeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Team");
                 });

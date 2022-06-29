@@ -20,7 +20,7 @@
 
         public ICollection<Ability> Abilities { get; set; } = new List<Ability>();
 
-        public int SuperHeroTeamId { get; set; }
-        public SuperHeroTeam Team { get; set; }
+        public int? SuperHeroTeamId { get; set; }
+        public SuperHeroTeam? Team { get; set; }
     }
 }
