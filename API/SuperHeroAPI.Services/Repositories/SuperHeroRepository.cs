@@ -46,8 +46,12 @@ namespace SuperHeroAPI.Services.Repositories
 
         public async Task<SuperHero?> GetById(int id)
         {
-            var db_hero = await _Context.SuperHeroes.FirstOrDefaultAsync(hero => hero.Id == id)
+            var db_hero = await _Context.SuperHeroes
+                .Include(t => t.Team)
+                .Include(s => s.Abilities)
+                .FirstOrDefaultAsync(hero => hero.Id == id)
                 .ConfigureAwait(false);
+
             if (db_hero is null)
                 _Logger.LogWarning("Супергероя под Id:{0} не существует", id);
             else
@@ -57,7 +61,12 @@ namespace SuperHeroAPI.Services.Repositories
 
         public async Task<IEnumerable<SuperHero>> GetAll()
         {
-            var db_heroes = await _Context.SuperHeroes.ToListAsync();
+            var db_heroes = await _Context.SuperHeroes
+                .Include(t => t.Team)
+                .Include(s => s.Abilities)
+                .ToListAsync()
+                .ConfigureAwait(false);
+
             _Logger.LogInformation("Супергерои в колличестве:{0} были получены", db_heroes.Count);
             return db_heroes;
         }
@@ -73,8 +82,11 @@ namespace SuperHeroAPI.Services.Repositories
             }
 
             db_hero.Name = hero.Name;
-            //db_hero.LastName = hero.LastName;
-            //db_hero.FirstName = hero.FirstName;
+            db_hero.RealLastName = hero.RealLastName;
+            db_hero.RealName = hero.RealName;
+            db_hero.Type = hero.Type;
+            db_hero.Height = hero.Height;
+            db_hero.Weight = hero.Weight;
             db_hero.Place = hero.Place;
             await _Context.SaveChangesAsync();
 
