@@ -18,6 +18,7 @@ builder.Services.AddSwaggerGen();
 
 //Регистрация собственный сервисов
 builder.Services.AddScoped<ISuperHeroRepository, SuperHeroRepository>();
+builder.Services.AddScoped<ISuperHeroTeamRepository, SuperHeroTeamRepository>();
 builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 
 var app = builder.Build();
