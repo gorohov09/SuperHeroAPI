@@ -31,20 +31,33 @@ namespace SuperHeroAPI.Controllers
         public async Task<IActionResult> GetById(int Id)
         {
             var hero = await _SuperHeroService.GetById(Id);
+            if (hero is null)
+                return NotFound();
+
             var hero_dto = _Mapper.Map<SuperHeroDTO>(hero);
-            return hero_dto is null ? NotFound() : Ok(hero_dto);
+            return Ok(hero_dto);
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddHero(SuperHero hero)
+        public async Task<IActionResult> AddHero(SuperHeroDTO hero_dto)
         {
+            if (hero_dto is null)
+                return NotFound();
+
+            var hero = _Mapper.Map<SuperHero>(hero_dto);
             await _SuperHeroService.Add(hero);
-            return Ok(await _SuperHeroService.GetAll());
+            var heroes = await _SuperHeroService.GetAll();
+            var heroes_dto = _Mapper.Map<List<SuperHeroDTO>>(heroes);
+            return Ok(heroes_dto);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateHero(SuperHero hero)
+        public async Task<IActionResult> UpdateHero(SuperHeroDTO hero_dto)
         {
+            if (hero_dto is null)
+                return NotFound();
+
+            var hero = _Mapper.Map<SuperHero>(hero_dto);
             var result = await _SuperHeroService.Update(hero);
             return Ok(result);
         }
