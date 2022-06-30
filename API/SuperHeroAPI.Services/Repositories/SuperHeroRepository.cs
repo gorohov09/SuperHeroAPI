@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SuperHeroAPI.DAL.Context;
+using SuperHeroAPI.Domain.DTO;
 using SuperHeroAPI.Domain.Entities;
 using SuperHeroAPI.Services.Interfaces;
 
@@ -91,6 +92,46 @@ namespace SuperHeroAPI.Services.Repositories
             await _Context.SaveChangesAsync();
 
             _Logger.LogInformation("Информация о супергерое под Id:{0} была изменена", db_hero.Id);
+            return true;
+        }
+
+        public async Task<bool> AddAbility(int heroId, AbilityDTO abilityDTO)
+        {
+            var db_hero = await _Context.SuperHeroes.FirstOrDefaultAsync(h => h.Id == heroId)
+                .ConfigureAwait(false);
+            if (db_hero is null)
+            {
+                _Logger.LogWarning("Пытаемся добавить cуперспособность несуществующему супергерою");
+                return false;
+            }
+
+            if (abilityDTO is null || string.IsNullOrEmpty(abilityDTO.Description))
+            {
+                _Logger.LogWarning("Суперспобность не существует или описание суперспособности отсутствует");
+                return false;
+            }
+
+            if (abilityDTO.Id == 0)
+            {
+                var db_ability = await _Context.Abilities.FirstOrDefaultAsync(a => a.Description == abilityDTO.Description);
+                if (db_ability is null)
+                {
+                    _Logger.LogWarning("Суперспособность: {0} не существует. Создаем свою", abilityDTO.Description);
+                    db_ability = new Ability { Description = abilityDTO.Description };
+                }
+
+                db_hero.Abilities.Add(db_ability);
+            }
+            else
+            {
+                var db_ability = await _Context.Abilities.FirstOrDefaultAsync(a => a.Id == abilityDTO.Id);
+                if (db_ability is null)
+                {
+                    _Logger.LogWarning("Суперспособность с Id: {0} не существует.", abilityDTO.Id);
+                    return false;
+                }
+            }
+            await _Context.SaveChangesAsync();
             return true;
         }
     }

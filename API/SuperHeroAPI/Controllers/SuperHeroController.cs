@@ -68,5 +68,15 @@ namespace SuperHeroAPI.Controllers
             var result = await _SuperHeroService.Delete(Id);
             return Ok(result);
         }
+
+        [HttpPost("add/ability/{heroId}")]
+        public async Task<IActionResult> AddAbilityInHero(int heroId, [FromBody]AbilityDTO abilityDTO)
+        {
+            if (abilityDTO is null)
+                return NotFound();
+
+            var result = await _SuperHeroService.AddAbility(heroId, abilityDTO);
+            return Ok(result);
+        }
     }
 }

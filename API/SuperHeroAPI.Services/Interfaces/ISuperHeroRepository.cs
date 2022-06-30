@@ -1,4 +1,5 @@
-﻿using SuperHeroAPI.Domain.Entities;
+﻿using SuperHeroAPI.Domain.DTO;
+using SuperHeroAPI.Domain.Entities;
 
 namespace SuperHeroAPI.Services.Interfaces
 {
@@ -13,5 +14,7 @@ namespace SuperHeroAPI.Services.Interfaces
         Task<bool> Update(SuperHero hero);
 
         Task<bool> Delete(int id);
+
+        Task<bool> AddAbility(int heroId, AbilityDTO abilityDTO);
     }
 }
