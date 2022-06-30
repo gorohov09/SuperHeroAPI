@@ -55,6 +55,30 @@ namespace SuperHeroAPI.Services.Repositories
             return true;
         }
 
+        public async Task<bool> DeleteHeroInGroup(int heroId)
+        {
+            var db_hero = await _Context.SuperHeroes
+                .Include(t => t.Team)
+                .FirstOrDefaultAsync(hero => hero.Id == heroId)
+                .ConfigureAwait(false);
+
+            if (db_hero is null)
+            {
+                _Logger.LogWarning("Супергерой с Id:{0} не найден", heroId);
+                return false;
+            }
+
+            if (db_hero.Team is null)
+            {
+                _Logger.LogWarning("Супергерой с Id:{0} не состоит в группе", heroId);
+                return false;
+            }
+
+            db_hero.Team = null;
+            await _Context.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<SuperHeroTeam> GetById(int id)
         {
             var group = await _Context.SuperHeroTeams

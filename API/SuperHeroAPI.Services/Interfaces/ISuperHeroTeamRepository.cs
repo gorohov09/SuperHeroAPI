@@ -8,5 +8,7 @@ namespace SuperHeroAPI.Services.Interfaces
         Task<SuperHeroTeam> GetById(int id);
 
         Task<bool> AddHeroInGroup(int heroId, AddHeroInGroupDTO group);
+
+        Task<bool> DeleteHeroInGroup(int heroId);
     }
 }

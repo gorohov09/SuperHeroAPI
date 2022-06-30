@@ -37,5 +37,12 @@ namespace SuperHeroAPI.Controllers
             var result = await _SuperHeroTeamService.AddHeroInGroup(heroId, group);
             return Ok(result);
         }
+
+        [HttpPost("delete/{heroId}")]
+        public async Task<IActionResult> DeleteHeroInGroup(int heroId)
+        {
+            var result = await _SuperHeroTeamService.DeleteHeroInGroup(heroId);
+            return Ok(result);
+        }
     }
 }
