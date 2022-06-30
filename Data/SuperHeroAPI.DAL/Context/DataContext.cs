@@ -25,7 +25,8 @@ namespace SuperHeroAPI.DAL.Context
             modelBuilder.Entity<SuperHero>()
                 .HasOne(s => s.Team)
                 .WithMany(t => t.Heroes)
-                .HasForeignKey(s => s.SuperHeroTeamId);
+                .HasForeignKey(s => s.SuperHeroTeamId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Ability>()
                 .HasMany(a => a.SuperHeroes)
