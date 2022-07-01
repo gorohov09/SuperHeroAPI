@@ -78,5 +78,21 @@ namespace SuperHeroAPI.Controllers
             var result = await _SuperHeroService.AddAbility(heroId, abilityDTO);
             return Ok(result);
         }
+
+        [HttpPost("add/group/{heroId}")]
+        public async Task<IActionResult> AddHeroInGroup(int heroId, [FromBody] AddHeroInGroupDTO group)
+        {
+            if (group is null)
+                return NotFound();
+            var result = await _SuperHeroService.AddHeroInGroup(heroId, group);
+            return Ok(result);
+        }
+
+        [HttpPost("delete/group/{heroId}")]
+        public async Task<IActionResult> DeleteHeroInGroup(int heroId)
+        {
+            var result = await _SuperHeroService.DeleteHeroInGroup(heroId);
+            return Ok(result);
+        }
     }
 }

@@ -16,5 +16,9 @@ namespace SuperHeroAPI.Services.Interfaces
         Task<bool> Delete(int id);
 
         Task<bool> AddAbility(int heroId, AbilityDTO abilityDTO);
+
+        Task<bool> AddHeroInGroup(int heroId, AddHeroInGroupDTO group);
+
+        Task<bool> DeleteHeroInGroup(int heroId);
     }
 }

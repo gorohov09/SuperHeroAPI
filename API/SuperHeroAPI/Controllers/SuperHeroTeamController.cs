@@ -28,21 +28,5 @@ namespace SuperHeroAPI.Controllers
             var dto_group = _Mapper.Map<SuperHeroTeamDTO>(group);
             return Ok(dto_group);
         }
-
-        [HttpPost("add/{heroId}")]
-        public async Task<IActionResult> AddHeroInGroup(int heroId, [FromBody]AddHeroInGroupDTO group)
-        {
-            if (group is null)
-                return NotFound();
-            var result = await _SuperHeroTeamService.AddHeroInGroup(heroId, group);
-            return Ok(result);
-        }
-
-        [HttpPost("delete/{heroId}")]
-        public async Task<IActionResult> DeleteHeroInGroup(int heroId)
-        {
-            var result = await _SuperHeroTeamService.DeleteHeroInGroup(heroId);
-            return Ok(result);
-        }
     }
 }
