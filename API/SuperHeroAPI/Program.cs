@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using SuperHeroAPI.DAL.Context;
 using SuperHeroAPI.Services.Interfaces;
 using SuperHeroAPI.Services.Repositories;
@@ -6,7 +7,7 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Host.UseSerilog((host, log) => log.ReadFrom.Configuration(host.Configuration));
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<DataContext>(options =>
@@ -24,7 +25,6 @@ builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
